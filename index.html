@@ -46,8 +46,7 @@
   }
   svg { width: 100%; height: 100%; display: block; touch-action: manipulation; }
   .dot { transition: r 0.18s cubic-bezier(.2,.7,.3,1), x 0.18s, y 0.18s, width 0.18s, height 0.18s, fill 0.3s ease; pointer-events: none; }
-  .hit { cursor: pointer; pointer-events: all; }
-  .hit:hover { fill: var(--dot) !important; fill-opacity: 0.10; }
+  #board { cursor: pointer; }
 
   /* ---- Panel ---- */
   #panel {
@@ -305,20 +304,6 @@
         board.appendChild(el);
       }
     }
-    // transparent per-cell hit areas (on top) so clicking anywhere in a cell grows its dot
-    for (let row = 0; row < n; row++) {
-      for (let col = 0; col < n; col++) {
-        const hit = document.createElementNS(SVGNS, "rect");
-        hit.setAttribute("class", "hit");
-        hit.setAttribute("x", pad + col);
-        hit.setAttribute("y", pad + row);
-        hit.setAttribute("width", 1);
-        hit.setAttribute("height", 1);
-        hit.setAttribute("fill", "transparent");
-        hit.dataset.idx = row * n + col;
-        board.appendChild(hit);
-      }
-    }
     paint();
   }
 
@@ -345,14 +330,18 @@
 
   // ---------- interaction ----------
   board.addEventListener("click", (e) => {
-    const el = e.target.closest(".hit, .dot");
-    if (!el) return;
-    const idx = +el.dataset.idx;
-    if (e.shiftKey) {
-      state.levels[idx] = (state.levels[idx] - 1 + (state.steps + 1)) % (state.steps + 1);
-    } else {
-      state.levels[idx] = (state.levels[idx] + 1) % (state.steps + 1);
-    }
+    // map the click to a cell directly via the SVG transform (exact, no offset)
+    const ctm = board.getScreenCTM();
+    if (!ctm) return;
+    const pt = board.createSVGPoint();
+    pt.x = e.clientX; pt.y = e.clientY;
+    const p = pt.matrixTransform(ctm.inverse());
+    const col = Math.floor(p.x - state.pad);
+    const row = Math.floor(p.y - state.pad);
+    if (col < 0 || col >= state.size || row < 0 || row >= state.size) return;
+    const idx = row * state.size + col;
+    const m = state.steps + 1;
+    state.levels[idx] = (state.levels[idx] + (e.shiftKey ? -1 : 1) + m) % m;
     paint();
   });
 
