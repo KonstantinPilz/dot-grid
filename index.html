@@ -37,7 +37,7 @@
     min-width: 0;
   }
   #boardWrap {
-    width: min(82vmin, 760px);
+    width: min(var(--board, 62vmin), 100%);
     max-width: 100%;
     aspect-ratio: 1 / 1;
     display: flex;
@@ -167,6 +167,11 @@
 
     <div class="group">
       <label class="title">Shape</label>
+      <div class="row">
+        <label for="board">Board size</label>
+        <input type="range" id="board" min="30" max="92" step="1" value="62">
+        <span class="val" id="boardVal">62%</span>
+      </div>
       <div class="row">
         <label for="baseSize">Base dot size</label>
         <input type="range" id="baseSize" min="2" max="40" step="1" value="14">
@@ -338,6 +343,10 @@
   $("themeDark").addEventListener("click", () => setColors("#000000", "#ffffff"));
   $("swapColors").addEventListener("click", () => setColors(state.dotColor, state.bgColor));
 
+  $("board").addEventListener("input", e => {
+    document.documentElement.style.setProperty("--board", e.target.value + "vmin");
+    $("boardVal").textContent = e.target.value + "%";
+  });
   $("baseSize").addEventListener("input", e => {
     state.base = e.target.value / 100; $("baseSizeVal").textContent = e.target.value + "%"; paint();
   });
