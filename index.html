@@ -45,8 +45,9 @@
     justify-content: center;
   }
   svg { width: 100%; height: 100%; display: block; touch-action: manipulation; }
-  circle.dot { cursor: pointer; transition: r 0.18s cubic-bezier(.2,.7,.3,1), fill 0.3s ease; }
-  circle.dot:hover { opacity: 0.85; }
+  .dot { transition: r 0.18s cubic-bezier(.2,.7,.3,1), x 0.18s, y 0.18s, width 0.18s, height 0.18s, fill 0.3s ease; pointer-events: none; }
+  .hit { cursor: pointer; pointer-events: all; }
+  .hit:hover { fill: var(--dot) !important; fill-opacity: 0.10; }
 
   /* ---- Panel ---- */
   #panel {
@@ -305,6 +306,20 @@
         board.appendChild(el);
       }
     }
+    // transparent per-cell hit areas (on top) so clicking anywhere in a cell grows its dot
+    for (let row = 0; row < n; row++) {
+      for (let col = 0; col < n; col++) {
+        const hit = document.createElementNS(SVGNS, "rect");
+        hit.setAttribute("class", "hit");
+        hit.setAttribute("x", pad + col);
+        hit.setAttribute("y", pad + row);
+        hit.setAttribute("width", 1);
+        hit.setAttribute("height", 1);
+        hit.setAttribute("fill", "transparent");
+        hit.dataset.idx = row * n + col;
+        board.appendChild(hit);
+      }
+    }
     paint();
   }
 
@@ -331,7 +346,7 @@
 
   // ---------- interaction ----------
   board.addEventListener("click", (e) => {
-    const el = e.target.closest(".dot");
+    const el = e.target.closest(".hit, .dot");
     if (!el) return;
     const idx = +el.dataset.idx;
     if (e.shiftKey) {
@@ -475,6 +490,7 @@
     clone.removeAttribute("style");
     clone.setAttribute("width", 1000);
     clone.setAttribute("height", 1000);
+    clone.querySelectorAll(".hit").forEach(h => h.remove());
     clone.querySelectorAll(".dot").forEach(d => d.style.cursor = "");
     return '<?xml version="1.0" encoding="UTF-8"?>\n' + clone.outerHTML;
   }
@@ -511,6 +527,7 @@
   // ---------- init ----------
   document.body.style.setProperty("--bg", state.bgColor);
   document.body.style.setProperty("--dot", state.dotColor);
+  document.documentElement.style.setProperty("--board", $("board").value + "vmin");
   buildGallery();
   build();
 })();
