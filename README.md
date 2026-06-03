@@ -11,17 +11,23 @@ Live: https://konstantinpilz.github.io/dot-grid/
 - Sliders: board size, base dot size, touch gap, margin. Square-dot mode.
 - Clear / Fill / Random, plus SVG and 2000px PNG export.
 
-## Pattern library
-A curated gallery of 20 abstract, flowing patterns (waves, blobs, spirals, drapes, marble/smoke).
-Click a thumbnail to load it; the grid auto-sizes and you can then tweak individual dots.
+## Icon library
+A curated gallery of 20 recognizable icons rendered in the soft dot ("flowy") style —
+technology & statecraft themed: Person, People, Capitol, Globe, Flag, Scales, Microchip, CPU,
+Robot, Server, Network, Rocket, Monitor, Brain, Lightbulb, Gear, Shield, Eye, Lightning, Star.
+Click a thumbnail to load it; the grid auto-sizes (17–21 per side) and you can then tweak colors
+or click individual dots.
 
-Each pattern is a deterministic function `(x,y,n,steps) -> level`. The 20 shipped in `index.html`
-were curated from ~110 candidates generated across five families. Source candidates and the
-build/curation scripts:
-- `patterns/*.json` — all 110 candidate generators (waves, blobs, spirals, drapes, flow)
-- `compute-grids.js` — evaluates every generator to a level grid
-- `montage.py` — renders candidate contact sheets (PIL)
-- `extract.js` — pulls the curated 20 into `selected.json`
+Each icon is an explicit `grid` of dot levels (0–6). They were produced by drawing each icon as a
+high-res silhouette with PIL, then area-downsampling to an N×N ink-coverage grid (filled→big dot,
+edge→mid, empty→tiny) — giving the soft halftone look. Curated from ~43 candidates. Pipeline:
+- `icongen/render.py` — silhouette→dot-grid harness (sampling + contact sheets)
+- `icongen/icons_*.py` — PIL silhouette drawings (statecraft, tech, ai, objects)
+- `icongen/icons.json` — all sampled candidate grids
+
+An earlier abstract-pattern library (waves/blobs/spirals/etc., generated as math functions) lives in
+`patterns/*.json` with its build scripts (`compute-grids.js`, `montage.py`, `extract.js`); the page's
+loader still supports those function-based patterns alongside the explicit icon grids.
 
 Everything is a single self-contained `index.html` (no build step, no dependencies).
 
