@@ -105,6 +105,25 @@
   .checkbox-row { display: flex; align-items: center; gap: 8px; font-size: 13px; }
   .checkbox-row input { width: 16px; height: 16px; accent-color: var(--dot); }
   .hint { font-size: 11px; opacity: 0.5; line-height: 1.5; margin-top: 4px; }
+  .gallery {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;
+  }
+  .thumb {
+    position: relative; aspect-ratio: 1/1; border-radius: 7px; overflow: hidden;
+    cursor: pointer; border: 1.5px solid var(--panel-border); padding: 0; background: none;
+    transition: transform 0.08s ease, border-color 0.15s ease;
+  }
+  .thumb:hover { transform: scale(1.06); border-color: var(--dot); }
+  .thumb.active { border-color: var(--dot); border-width: 2px; }
+  .thumb svg { display: block; width: 100%; height: 100%; }
+  .thumb .tname {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    font-size: 8px; line-height: 1.3; padding: 2px 3px; text-align: center;
+    background: linear-gradient(transparent, rgba(0,0,0,0.55)); color: #fff;
+    opacity: 0; transition: opacity 0.15s ease; pointer-events: none;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .thumb:hover .tname { opacity: 1; }
 
   /* mobile */
   #panelToggle {
@@ -133,6 +152,12 @@
   <aside id="panel">
     <h1>Dot Grid</h1>
     <p class="sub">Click a dot to grow it one step. At the last step dots touch their neighbors. One more click resets it.</p>
+
+    <div class="group">
+      <label class="title">Patterns</label>
+      <div id="gallery" class="gallery"></div>
+      <p class="hint">Load a flowing pattern, then tweak or click individual dots.</p>
+    </div>
 
     <div class="group">
       <label class="title">Grid</label>
@@ -213,6 +238,10 @@
 (() => {
   const SVGNS = "http://www.w3.org/2000/svg";
   const board = document.getElementById("board");
+
+  // ---- Curated flowy pattern library (20) ----
+  const PATTERNS = [{"name":"Tidal","n":13,"steps":6,"code":"(x,y,n,s)=>{ const u=x/(n-1), v=y/(n-1); const f=(Math.sin(u*Math.PI*2 - v*1.5)+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"},{"name":"Deep Current","n":13,"steps":6,"code":"(x,y,n,s)=>{ const u=x/(n-1), v=y/(n-1); const f=(Math.sin((u+0.3*Math.sin(v*Math.PI*2))*Math.PI*4)+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"},{"name":"Corner Wake","n":13,"steps":6,"code":"(x,y,n,s)=>{ const r=Math.hypot(x,y); const f=(Math.sin(r*1.5)+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"},{"name":"Chevron Sea","n":13,"steps":6,"code":"(x,y,n,s)=>{ const cx=(n-1)/2; const d=Math.abs(x-cx)+y; const f=(Math.sin(d*0.9)+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"},{"name":"Maelstrom","n":13,"steps":6,"code":"(x,y,n,s)=>{ const cx=(n-1)/2, cy=(n-1)/2; const a=Math.atan2(y-cy,x-cx); const r=Math.hypot(x-cx,y-cy); const f=(Math.sin(a*2 - r*1.5)+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"},{"name":"Solitary","n":13,"steps":6,"code":"(x,y,n,s)=>{const cx=n*0.48,cy=n*0.52,sig=n*0.27;const d2=(x-cx)**2+(y-cy)**2;const v=s*Math.exp(-d2/(2*sig*sig));return Math.max(0,Math.min(s,Math.round(v)));}"},{"name":"Twin Fusion","n":13,"steps":6,"code":"(x,y,n,s)=>{const B=[[0.38,0.5,0.2],[0.62,0.5,0.2]];let f=0;for(const[fx,fy,fr]of B){const bx=fx*n,by=fy*n,r=fr*n;const d=Math.hypot(x-bx,y-by);f+=r*r/(d*d+0.7);}return Math.max(0,Math.min(s,Math.round(f*1.7)));}"},{"name":"Halo","n":13,"steps":6,"code":"(x,y,n,s)=>{const cx=n*0.5,cy=n*0.5;const d=Math.hypot(x-cx,y-cy);const ring=Math.exp(-((d-n*0.3)**2)/(2*(n*0.12)**2));return Math.max(0,Math.min(s,Math.round(ring*s)));}"},{"name":"Soft Crescent","n":13,"steps":6,"code":"(x,y,n,s)=>{const c1x=n*0.45,c1y=n*0.5,c2x=n*0.62,c2y=n*0.45;const sig=n*0.3;const a=Math.exp(-((x-c1x)**2+(y-c1y)**2)/(2*sig*sig));const b=0.85*Math.exp(-((x-c2x)**2+(y-c2y)**2)/(2*(n*0.22)**2));return Math.max(0,Math.min(s,Math.round((a-b+0.15)*s*1.3)));}"},{"name":"Plume","n":13,"steps":6,"code":"(x,y,n,s)=>{const bx=n*0.5;const sig=n*(0.16+0.012*y);const v=s*Math.exp(-((x-bx)**2)/(2*sig*sig))*Math.exp(-Math.abs(y-n*0.55)/(n*0.6));return Math.max(0,Math.min(s,Math.round(v*1.4)));}"},{"name":"Loose Galaxy","n":15,"steps":6,"code":"(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*2+Math.log(r+1)*4)+1)/2,env=Math.exp(-r/(n*0.5));const v=f*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"},{"name":"Whirlpool","n":15,"steps":6,"code":"(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*1+r*r*0.06)+1)/2,env=Math.exp(-r/(n*0.6));const v=f*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"},{"name":"Quad Swirl","n":13,"steps":6,"code":"(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*4+r*1.3)+1)/2,env=1-Math.abs(r-n*0.3)/(n*0.4);const v=f*Math.max(0,env)*s;return Math.max(0,Math.min(s,Math.round(v)));}"},{"name":"Diagonal Ramp","n":13,"steps":6,"code":"(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);return Math.max(0,Math.min(s,Math.round((u+v)/2*s)));}"},{"name":"Dome","n":13,"steps":6,"code":"(x,y,n,s)=>{const u=x/(n-1)-0.5,v=y/(n-1)-0.5;let d=Math.sqrt(u*u+v*v)/0.707;return Math.max(0,Math.min(s,Math.round((1-d)*s)));}"},{"name":"Drape","n":13,"steps":6,"code":"(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);let f=(Math.sin((u+v)*Math.PI*2.5)+1)/2;return Math.max(0,Math.min(s,Math.round(f*s)));}"},{"name":"Cresting Dunes","n":13,"steps":6,"code":"(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);let f=(Math.sin((u+v*0.5)*Math.PI*2.2)+1)/2;return Math.max(0,Math.min(s,Math.round(f*s)));}"},{"name":"Flowing Warp","n":13,"steps":6,"code":"(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);let f=(u+v)/2+0.18*Math.sin(v*Math.PI*3);return Math.max(0,Math.min(s,Math.round(f*s)));}"},{"name":"Marble Veins","n":13,"steps":6,"code":"(x,y,n,s)=>{const wx=x+3*Math.sin(y*0.45);const v=Math.abs(Math.sin(wx*0.5+y*0.2));return Math.max(0,Math.min(s,Math.round((1-v)*s)));}"},{"name":"Drifting Smoke","n":15,"steps":6,"code":"(x,y,n,s)=>{const wy=y+2.5*Math.sin(x*0.35);const f=Math.sin(x*0.4+wy*0.3)+0.5*Math.cos(wy*0.6+1)+0.3*Math.sin(x*0.9+2);return Math.max(0,Math.min(s,Math.round((f/1.8/2+0.5)*s)));}"}];
+  PATTERNS.forEach(p => { try { p.fn = (0, eval)('(' + p.code + ')'); } catch (e) { p.fn = () => 0; } });
 
   const state = {
     size: 6,
@@ -318,18 +347,18 @@
 
   $("size").addEventListener("input", e => {
     let v = Math.max(1, Math.min(40, parseInt(e.target.value) || 1));
-    state.size = v; state.levels = []; build();
+    state.size = v; state.levels = []; build(); clearActive();
   });
   $("steps").addEventListener("input", e => {
     let v = Math.max(1, Math.min(20, parseInt(e.target.value) || 1));
     state.steps = v;
     // clamp existing levels
     state.levels = state.levels.map(l => Math.min(l, v));
-    paint();
+    paint(); clearActive();
   });
-  $("dotColor").addEventListener("input", e => { state.dotColor = e.target.value; paint(); });
+  $("dotColor").addEventListener("input", e => { state.dotColor = e.target.value; paint(); refreshThumbs(); });
   $("bgColor").addEventListener("input", e => {
-    state.bgColor = e.target.value; document.body.style.setProperty("--bg", e.target.value); paint();
+    state.bgColor = e.target.value; document.body.style.setProperty("--bg", e.target.value); paint(); refreshThumbs();
   });
 
   function setColors(bg, dot) {
@@ -337,7 +366,7 @@
     $("bgColor").value = bg; $("dotColor").value = dot;
     document.body.style.setProperty("--bg", bg);
     document.body.style.setProperty("--dot", dot);
-    paint();
+    paint(); refreshThumbs();
   }
   $("themeLight").addEventListener("click", () => setColors("#ffffff", "#000000"));
   $("themeDark").addEventListener("click", () => setColors("#000000", "#ffffff"));
@@ -358,11 +387,11 @@
   });
   $("square").addEventListener("change", e => { state.square = e.target.checked; build(); });
 
-  $("reset").addEventListener("click", () => { state.levels = state.levels.map(() => 0); paint(); });
-  $("fill").addEventListener("click", () => { state.levels = state.levels.map(() => state.steps); paint(); });
+  $("reset").addEventListener("click", () => { state.levels = state.levels.map(() => 0); paint(); clearActive(); });
+  $("fill").addEventListener("click", () => { state.levels = state.levels.map(() => state.steps); paint(); clearActive(); });
   $("random").addEventListener("click", () => {
     state.levels = state.levels.map(() => Math.floor(Math.random() * (state.steps + 1)));
-    paint();
+    paint(); clearActive();
   });
 
   // ---------- presets ----------
@@ -386,6 +415,59 @@
     s.addEventListener("click", () => setColors(bg, dot));
     sw.appendChild(s);
   });
+
+  // ---------- pattern gallery ----------
+  function thumbSVG(p) {
+    const n = p.n, pad = 0.5, view = n + pad * 2, base = 0.2;
+    const svg = document.createElementNS(SVGNS, "svg");
+    svg.setAttribute("viewBox", `0 0 ${view} ${view}`);
+    const bg = document.createElementNS(SVGNS, "rect");
+    bg.setAttribute("width", view); bg.setAttribute("height", view);
+    bg.setAttribute("fill", state.bgColor);
+    svg.appendChild(bg);
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+      const lv = Math.max(0, Math.min(p.steps, Math.round(p.fn(x, y, n, p.steps))));
+      const d = base + (lv / p.steps) * (1 - base);
+      const c = document.createElementNS(SVGNS, "circle");
+      c.setAttribute("cx", pad + x + 0.5); c.setAttribute("cy", pad + y + 0.5);
+      c.setAttribute("r", d / 2); c.setAttribute("fill", state.dotColor);
+      svg.appendChild(c);
+    }
+    return svg;
+  }
+  function buildGallery() {
+    const g = $("gallery"); g.innerHTML = "";
+    PATTERNS.forEach((p, i) => {
+      const b = document.createElement("button");
+      b.className = "thumb"; b.title = p.name; b.dataset.i = i;
+      b.appendChild(thumbSVG(p));
+      const nm = document.createElement("span");
+      nm.className = "tname"; nm.textContent = p.name;
+      b.appendChild(nm);
+      b.addEventListener("click", () => loadPattern(i));
+      g.appendChild(b);
+    });
+  }
+  function refreshThumbs() {
+    $("gallery").querySelectorAll(".thumb svg").forEach(svg => {
+      svg.querySelector("rect").setAttribute("fill", state.bgColor);
+      svg.querySelectorAll("circle").forEach(c => c.setAttribute("fill", state.dotColor));
+    });
+  }
+  function clearActive() {
+    $("gallery").querySelectorAll(".thumb.active").forEach(b => b.classList.remove("active"));
+  }
+  function loadPattern(i) {
+    const p = PATTERNS[i];
+    state.size = p.n; state.steps = p.steps;
+    const lv = new Array(p.n * p.n);
+    for (let y = 0; y < p.n; y++) for (let x = 0; x < p.n; x++)
+      lv[y * p.n + x] = Math.max(0, Math.min(p.steps, Math.round(p.fn(x, y, p.n, p.steps))));
+    state.levels = lv;
+    $("size").value = p.n; $("steps").value = p.steps;
+    build();
+    $("gallery").querySelectorAll(".thumb").forEach((b, j) => b.classList.toggle("active", j === i));
+  }
 
   // ---------- export ----------
   function svgString() {
@@ -429,6 +511,7 @@
   // ---------- init ----------
   document.body.style.setProperty("--bg", state.bgColor);
   document.body.style.setProperty("--dot", state.dotColor);
+  buildGallery();
   build();
 })();
 </script>

@@ -1,0 +1,134 @@
+[
+  {
+    "name": "Tidal",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const u=x/(n-1), v=y/(n-1); const f=(Math.sin(u*Math.PI*2 - v*1.5)+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Ripple",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const cx=(n-1)/2, cy=(n-1)/2; const r=Math.hypot(x-cx,y-cy); const f=(Math.sin(r*1.6)+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Moire",
+    "n": 14,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const a=Math.sin(x*0.85), b=Math.sin(y*0.85); const f=(a*b+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Swell",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const d=(x+y)/(2*(n-1)); const f=(Math.sin(d*Math.PI*3)+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Interfere",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const r1=Math.hypot(x-2,y-2), r2=Math.hypot(x-(n-3),y-(n-3)); const f=(Math.sin(r1*1.4)+Math.sin(r2*1.4))/4+0.5; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Undertow",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const u=x/(n-1), v=y/(n-1); const f=(Math.sin(v*Math.PI*3 + Math.sin(u*Math.PI*2))+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Pond Drop",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const cx=(n-1)/2, cy=(n-1)/2; const r=Math.hypot(x-cx,y-cy); const env=Math.exp(-r/(n*0.5)); const f=(Math.sin(r*2.0)*env+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Cross Swell",
+    "n": 14,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const u=x/(n-1), v=y/(n-1); const f=((Math.sin(u*Math.PI*3)+Math.sin(v*Math.PI*3))/2+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Corner Wake",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const r=Math.hypot(x,y); const f=(Math.sin(r*1.5)+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Standing",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const u=x/(n-1), v=y/(n-1); const f=(Math.sin(u*Math.PI*4)*Math.cos(v*Math.PI*2)+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Twin Source",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const cx=(n-1)/2; const r1=Math.hypot(x-cx+3,y-cx), r2=Math.hypot(x-cx-3,y-cx); const f=(Math.sin(r1*1.7)+Math.sin(r2*1.7))/4+0.5; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Diagonal Drift",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const d=(x-y)/(n-1); const f=(Math.sin(d*Math.PI*2.5)+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Whirl",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const cx=(n-1)/2, cy=(n-1)/2; const a=Math.atan2(y-cy,x-cx); const r=Math.hypot(x-cx,y-cy); const f=(Math.sin(a*3+r*1.2)+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Ebb Tide",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const u=x/(n-1), v=y/(n-1); const env=1-v; const f=((Math.sin(u*Math.PI*4)+1)/2)*env; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Lagoon",
+    "n": 14,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const cx=(n-1)/2, cy=(n-1)/2; const r=Math.hypot(x-cx,y-cy)/cx; const f=(Math.cos(r*Math.PI*2.5)+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Chevron Sea",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const cx=(n-1)/2; const d=Math.abs(x-cx)+y; const f=(Math.sin(d*0.9)+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Caustic",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const u=x/(n-1), v=y/(n-1); const f=(Math.sin(u*9)*Math.sin(v*9)+Math.sin((u+v)*7))/3+0.5; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Surge",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const u=x/(n-1), v=y/(n-1); const env=Math.exp(-Math.pow((v-0.5)*2.2,2)); const f=((Math.sin(u*Math.PI*5)+1)/2)*env; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Ripple Fade",
+    "n": 14,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const cx=(n-1)/2, cy=(n-1)/2; const r=Math.hypot(x-cx,y-cy); const env=Math.max(0,1-r/(n*0.7)); const f=((Math.sin(r*2.2)+1)/2)*env; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Beat",
+    "n": 14,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const u=x/(n-1); const f=(Math.sin(u*Math.PI*8)*Math.sin(u*Math.PI*1.3 + y/(n-1)*2)+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Maelstrom",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const cx=(n-1)/2, cy=(n-1)/2; const a=Math.atan2(y-cy,x-cx); const r=Math.hypot(x-cx,y-cy); const f=(Math.sin(a*2 - r*1.5)+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  },
+  {
+    "name": "Deep Current",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{ const u=x/(n-1), v=y/(n-1); const f=(Math.sin((u+0.3*Math.sin(v*Math.PI*2))*Math.PI*4)+1)/2; return Math.max(0,Math.min(s,Math.round(f*s))); }"
+  }
+]

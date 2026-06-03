@@ -1,0 +1,134 @@
+[
+  {
+    "name": "Twin Vortex",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*2+r*0.9)+1)/2,env=Math.exp(-r/(n*0.45));const v=f*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Pinwheel Five",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*5+r*0.7)+1)/2,env=1-r/(n*0.75);const v=f*Math.max(0,env)*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Tight Whirl",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*3+r*1.8)+1)/2,env=Math.exp(-r/(n*0.6));const v=f*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Loose Galaxy",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*2+Math.log(r+1)*4)+1)/2,env=Math.exp(-r/(n*0.5));const v=f*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Counter Swirl",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const inner=Math.sin(a*3+r*1.2),outer=Math.sin(a*3-r*1.2),f=(((r<n*0.3)?inner:outer)+1)/2;const v=f*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Rim Vortex",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*4+r*1.0)+1)/2,env=Math.min(1,r/(n*0.45));const v=f*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Eye of Storm",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const calm=Math.max(0,1-Math.exp(-r/(n*0.15)));const f=(Math.sin(a*2+r*1.4)+1)/2,env=Math.exp(-r/(n*0.55));const v=f*env*calm*s*1.6;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Triple Arm",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*3+r*1.1)+1)/2,env=Math.exp(-r/(n*0.5));const v=Math.pow(f,1.3)*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Sharp Pinwheel",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const w=Math.sin(a*4+r*0.8),f=w>0.3?1:0.15,env=1-r/(n*0.7);const v=f*Math.max(0,env)*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Logarithmic Spin",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a+Math.log(r+0.5)*3.2)+1)/2,env=Math.exp(-r/(n*0.55));const v=f*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Whirlpool",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*1+r*r*0.06)+1)/2,env=Math.exp(-r/(n*0.6));const v=f*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Petal Rotor",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.cos(a*6+r*0.6)+1)/2,env=Math.sin(Math.min(1,r/(n*0.45))*Math.PI);const v=f*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Double Helix Swirl",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*2+r*1.5)*Math.cos(r*0.5)+1)/2,env=Math.exp(-r/(n*0.5));const v=f*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Cyclone",
+    "n": 15,
+    "steps": 7,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*2+Math.sqrt(r)*3.5)+1)/2,env=Math.exp(-r/(n*0.5));const v=f*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Quad Swirl",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*4+r*1.3)+1)/2,env=1-Math.abs(r-n*0.3)/(n*0.4);const v=f*Math.max(0,env)*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Slow Drift",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*2+r*0.45)+1)/2;const v=f*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Spiral Knot",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*3+r*1.1)*Math.sin(a*2-r*0.7)+1)/2,env=Math.exp(-r/(n*0.6));const v=f*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Hot Core Vortex",
+    "n": 13,
+    "steps": 7,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*2+r*2.2)+1)/2,env=Math.exp(-r/(n*0.35));const v=(f*0.5+0.5)*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Fibonacci Swirl",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*5+Math.log(r+1)*5)+1)/2,env=Math.exp(-r/(n*0.55));const v=f*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Wide Gyre",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*1+r*0.8)+1)/2,env=Math.sin(Math.min(1,r/(n*0.5))*Math.PI);const v=f*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Twisted Petals",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.cos(a*5+r*1.0)+1)/2,env=Math.exp(-r/(n*0.5));const v=Math.pow(f,1.5)*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  },
+  {
+    "name": "Maelstrom",
+    "n": 15,
+    "steps": 7,
+    "code": "(x,y,n,s)=>{const cx=(n-1)/2,cy=(n-1)/2,dx=x-cx,dy=y-cy,r=Math.hypot(dx,dy)+1e-6,a=Math.atan2(dy,dx);const f=(Math.sin(a*3+r*1.0+Math.sin(r*0.4)*2)+1)/2,env=Math.exp(-r/(n*0.55));const v=f*env*s;return Math.max(0,Math.min(s,Math.round(v)));}"
+  }
+]

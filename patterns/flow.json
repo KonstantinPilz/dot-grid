@@ -1,0 +1,134 @@
+[
+  {
+    "name": "Smoke",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const f=Math.sin(x*0.55+Math.cos(y*0.4))+0.6*Math.sin(y*0.8+1.2)+0.4*Math.sin((x+y)*0.5+2);return Math.max(0,Math.min(s,Math.round((f/2+0.5)*s)));}"
+  },
+  {
+    "name": "Marble Veins",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const wx=x+3*Math.sin(y*0.45);const v=Math.abs(Math.sin(wx*0.5+y*0.2));return Math.max(0,Math.min(s,Math.round((1-v)*s)));}"
+  },
+  {
+    "name": "Warp Swirl",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const wx=x+2.5*Math.sin(y*0.5);const wy=y+2.5*Math.cos(x*0.4);const f=Math.sin(wx*0.6)+Math.sin(wy*0.7);return Math.max(0,Math.min(s,Math.round((f/2+0.5)*s)));}"
+  },
+  {
+    "name": "Terrain",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const f=Math.sin(x*0.3+y*0.2)+0.5*Math.sin(x*0.6+y*0.5+1)+0.25*Math.sin(x*1.2+y*1.0+2);return Math.max(0,Math.min(s,Math.round((f/1.75/2+0.5)*s)));}"
+  },
+  {
+    "name": "Curling Flow",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const a=Math.sin(x*0.4)+Math.cos(y*0.35);const wx=x+2*Math.sin(y*0.6+a);const f=Math.sin(wx*0.5+y*0.3);return Math.max(0,Math.min(s,Math.round((f/2+0.5)*s)));}"
+  },
+  {
+    "name": "Drifting Smoke",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const wy=y+2.5*Math.sin(x*0.35);const f=Math.sin(x*0.4+wy*0.3)+0.5*Math.cos(wy*0.6+1)+0.3*Math.sin(x*0.9+2);return Math.max(0,Math.min(s,Math.round((f/1.8/2+0.5)*s)));}"
+  },
+  {
+    "name": "Ridged Marble",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const wx=x+2.2*Math.sin(y*0.5+1);const wy=y+2.2*Math.cos(x*0.45);const v=Math.abs(Math.sin(wx*0.45)+Math.sin(wy*0.5));return Math.max(0,Math.min(s,Math.round((1-Math.min(1,v))*s)));}"
+  },
+  {
+    "name": "Diagonal Streaks",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const d=x+y+2*Math.sin((x-y)*0.5);const f=Math.sin(d*0.4)+0.4*Math.sin((x-y)*0.6+1);return Math.max(0,Math.min(s,Math.round((f/1.4/2+0.5)*s)));}"
+  },
+  {
+    "name": "Turbulence",
+    "n": 15,
+    "steps": 7,
+    "code": "(x,y,n,s)=>{const wx=x+2*Math.sin(y*0.6);const wy=y+2*Math.sin(x*0.55+1);const f=Math.sin(wx*0.5)+0.6*Math.sin(wy*0.8+1)+0.4*Math.sin((wx+wy)*0.4+2);return Math.max(0,Math.min(s,Math.round((f/2/2+0.5)*s)));}"
+  },
+  {
+    "name": "Contour Flow",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const r=Math.sin(x*0.35+Math.cos(y*0.4))+Math.cos(y*0.4);const v=Math.abs(Math.sin(r*1.6));return Math.max(0,Math.min(s,Math.round(v*s)));}"
+  },
+  {
+    "name": "Vortex",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=x-n/2,cy=y-n/2;const ang=Math.atan2(cy,cx);const rad=Math.sqrt(cx*cx+cy*cy);const f=Math.sin(ang*3+rad*0.6);return Math.max(0,Math.min(s,Math.round((f/2+0.5)*s)));}"
+  },
+  {
+    "name": "Fractal Hills",
+    "n": 15,
+    "steps": 7,
+    "code": "(x,y,n,s)=>{let f=0,a=1,fr=0.25;for(let i=0;i<4;i++){f+=a*Math.sin(x*fr+y*fr*0.8+i);a*=0.55;fr*=1.9;}return Math.max(0,Math.min(s,Math.round((f/1.9/2+0.5)*s)));}"
+  },
+  {
+    "name": "Smoke Plume",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=x-n/2;const wx=cx+3*Math.sin(y*0.4);const f=Math.exp(-wx*wx*0.04)*Math.sin(y*0.5+1)*1.5+Math.sin(y*0.3);return Math.max(0,Math.min(s,Math.round((f/2.5/2+0.5)*s)));}"
+  },
+  {
+    "name": "Crosswind",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const wx=x+3*Math.sin(y*0.3);const wy=y+3*Math.cos(x*0.25);const f=Math.sin(wx*0.45+wy*0.2)+0.5*Math.cos(wy*0.5);return Math.max(0,Math.min(s,Math.round((f/1.5/2+0.5)*s)));}"
+  },
+  {
+    "name": "Onyx Banding",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const wx=x+2*Math.sin(y*0.55+1)+Math.sin(x*0.3);const v=Math.abs(Math.sin(wx*0.6+y*0.15));return Math.max(0,Math.min(s,Math.round(Math.pow(1-v,1.4)*s)));}"
+  },
+  {
+    "name": "Eddy Currents",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const a=Math.sin(x*0.5)*Math.cos(y*0.5);const wx=x+3*a;const wy=y+3*Math.sin(x*0.4)*Math.cos(y*0.3);const f=Math.sin(wx*0.4)+Math.sin(wy*0.45);return Math.max(0,Math.min(s,Math.round((f/2+0.5)*s)));}"
+  },
+  {
+    "name": "Soft Dunes",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const f=Math.sin(x*0.3+1.5*Math.sin(y*0.25))+0.4*Math.sin(y*0.4);return Math.max(0,Math.min(s,Math.round((f/1.4/2+0.5)*s)));}"
+  },
+  {
+    "name": "Ripple Warp",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const cx=x-n/2,cy=y-n/2;const r=Math.sqrt(cx*cx+cy*cy)+2*Math.sin(Math.atan2(cy,cx)*4);const f=Math.sin(r*0.9);return Math.max(0,Math.min(s,Math.round((f/2+0.5)*s)));}"
+  },
+  {
+    "name": "Veined Stone",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const wx=x+2.5*Math.sin(y*0.4+Math.cos(x*0.3));const wy=y+2*Math.cos(x*0.5);const v=Math.abs(Math.sin(wx*0.5)*Math.cos(wy*0.4));return Math.max(0,Math.min(s,Math.round((1-v)*s)));}"
+  },
+  {
+    "name": "Wisps",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const wx=x+2*Math.sin(y*0.7+x*0.2);const f=Math.sin(wx*0.6)+0.5*Math.sin(y*0.5+1.5)+0.3*Math.sin((wx-y)*0.4);return Math.max(0,Math.min(s,Math.round((f/1.8/2+0.5)*s)));}"
+  },
+  {
+    "name": "Layered Topography",
+    "n": 15,
+    "steps": 7,
+    "code": "(x,y,n,s)=>{let f=Math.sin(x*0.35+y*0.15)+0.5*Math.sin(x*0.2+y*0.5+1)+0.25*Math.sin((x+y)*0.7+2);const v=Math.abs(Math.sin(f*1.5));return Math.max(0,Math.min(s,Math.round((1-v*0.7)*s)));}"
+  },
+  {
+    "name": "Convection",
+    "n": 15,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const wx=x+2.5*Math.sin(y*0.45+1);const f=Math.sin(wx*0.5)*Math.cos(y*0.4)+0.5*Math.sin(x*0.3+y*0.3+2);return Math.max(0,Math.min(s,Math.round((f/1.5/2+0.5)*s)));}"
+  }
+]

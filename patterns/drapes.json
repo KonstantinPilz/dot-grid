@@ -1,0 +1,134 @@
+[
+  {
+    "name": "Diagonal Ramp",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);return Math.max(0,Math.min(s,Math.round((u+v)/2*s)));}"
+  },
+  {
+    "name": "Horizontal Ramp",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1);return Math.max(0,Math.min(s,Math.round(u*s)));}"
+  },
+  {
+    "name": "Vertical Ramp",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const v=y/(n-1);return Math.max(0,Math.min(s,Math.round(v*s)));}"
+  },
+  {
+    "name": "Anti-Diagonal Ramp",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);return Math.max(0,Math.min(s,Math.round((u+(1-v))/2*s)));}"
+  },
+  {
+    "name": "Corner Bowl",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);let d=Math.sqrt(u*u+v*v)/1.414;return Math.max(0,Math.min(s,Math.round(d*s)));}"
+  },
+  {
+    "name": "Dome",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1)-0.5,v=y/(n-1)-0.5;let d=Math.sqrt(u*u+v*v)/0.707;return Math.max(0,Math.min(s,Math.round((1-d)*s)));}"
+  },
+  {
+    "name": "Soft Bowl",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1)-0.5,v=y/(n-1)-0.5;let d=(u*u+v*v)/0.5;return Math.max(0,Math.min(s,Math.round(d*s)));}"
+  },
+  {
+    "name": "Drape",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);let f=(Math.sin((u+v)*Math.PI*2.5)+1)/2;return Math.max(0,Math.min(s,Math.round(f*s)));}"
+  },
+  {
+    "name": "Folded Cloth",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);let f=(Math.sin((u-v)*Math.PI*3)+1)/2;return Math.max(0,Math.min(s,Math.round(f*s)));}"
+  },
+  {
+    "name": "Dune",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);let f=(Math.sin((u*2.2+v*0.6)*Math.PI)+1)/2,g=v*0.4;return Math.max(0,Math.min(s,Math.round((f*0.7+g*0.3)*s)));}"
+  },
+  {
+    "name": "Cresting Dunes",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);let f=(Math.sin((u+v*0.5)*Math.PI*2.2)+1)/2;return Math.max(0,Math.min(s,Math.round(f*s)));}"
+  },
+  {
+    "name": "Rolling Hills",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);let f=(Math.sin(u*Math.PI*2)*0.5+Math.cos(v*Math.PI*1.5)*0.5+1)/2;return Math.max(0,Math.min(s,Math.round(f*s)));}"
+  },
+  {
+    "name": "Radial Bands",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1)-0.5,v=y/(n-1)-0.5;let d=Math.sqrt(u*u+v*v);return Math.max(0,Math.min(s,Math.round((Math.sin(d*Math.PI*4)+1)/2*s)));}"
+  },
+  {
+    "name": "Corner Contours",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);let f=Math.sqrt(u*u+v*v);return Math.max(0,Math.min(s,Math.round((Math.sin(f*Math.PI*3)+1)/2*s)));}"
+  },
+  {
+    "name": "Diagonal Bands",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);let f=(u+v)/2;return Math.max(0,Math.min(s,Math.round((Math.sin(f*Math.PI*5)+1)/2*s)));}"
+  },
+  {
+    "name": "Warped Gradient",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);let uu=u+0.2*Math.sin(v*Math.PI*2);return Math.max(0,Math.min(s,Math.round(uu*s)));}"
+  },
+  {
+    "name": "Flowing Warp",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);let f=(u+v)/2+0.18*Math.sin(v*Math.PI*3);return Math.max(0,Math.min(s,Math.round(f*s)));}"
+  },
+  {
+    "name": "Ripple Drape",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);let f=(Math.sin(u*Math.PI*3+v*Math.PI)+1)/2;return Math.max(0,Math.min(s,Math.round(f*s)));}"
+  },
+  {
+    "name": "Sweeping Bands",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);let f=u*0.7+0.3*Math.sin(v*Math.PI*2.5);return Math.max(0,Math.min(s,Math.round((Math.sin(f*Math.PI*4)+1)/2*s)));}"
+  },
+  {
+    "name": "Valley Fold",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);let f=Math.abs(u-0.5)+0.4*v;return Math.max(0,Math.min(s,Math.round(f/1.4*2*s)));}"
+  },
+  {
+    "name": "Gentle Saddle",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1)-0.5,v=y/(n-1)-0.5;let f=(u*u-v*v)+0.5;return Math.max(0,Math.min(s,Math.round(f*s)));}"
+  },
+  {
+    "name": "Topographic",
+    "n": 13,
+    "steps": 6,
+    "code": "(x,y,n,s)=>{const u=x/(n-1),v=y/(n-1);let f=Math.sin(u*Math.PI*1.5)*Math.cos(v*Math.PI*1.5);return Math.max(0,Math.min(s,Math.round((Math.sin(f*Math.PI*3)+1)/2*s)));}"
+  }
+]
